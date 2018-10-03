@@ -1,6 +1,6 @@
-## What is Alamada
+## What is Alameda
 
-Alameda is an intelligent resource orchestrator for Kubernetes, providing the features of autonomous balancing, scaling and scheduling by using machine learning. Alameda learns the continuing changes of compute and I/O metrics from clusters, predicts the future demands for pods, and intelligently orchestrates underlying resources to fulfill the dynamic resource requests without manual configuration.
+Alameda is an intelligent resource orchestrator for Kubernetes, providing the features of autonomous balancing, scaling, and scheduling by using machine learning. Alameda learns the continuing changes of computing and I/O metrics from clusters, predicts the future demands for pods, and intelligently orchestrates underlying resources to fulfill the dynamic resource requests without manual configuration.
 
 For more details, please refer to https://github.com/containers-ai/Alameda
 
@@ -21,7 +21,7 @@ Alamada provides Rook with the following features:
 
 ## How Alamada works
 
-1. First Alamada data collector gets metrics, events and logs from Prometheus
+1. First Alamada data collector gets metrics, events, and logs from Prometheus
 2. Alamada AI engine generates resource prediction
 3. Alamada resource operator monitors Rook cluster CRD
 4. Alamada generates resource operation planning for Rook cluster
