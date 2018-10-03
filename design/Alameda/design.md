@@ -26,5 +26,5 @@ Alameda provides Rook with the following features:
 3. Alameda resource operator monitors Rook cluster CRD
 4. Alameda generates resource operation planning for Rook cluster
 
-![work_flow](./alamada_work_with_rook.png)
+![work_flow](./Alameda_work_with_rook.png)
 
