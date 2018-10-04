@@ -17,7 +17,7 @@ The main purpose of Alameda is to provide prediction and planning to Rook. Rook 
     - prediction-based pod (CPU and memory) requests and limits configuration
     - prediction-based pod replication
     - provision volumes from predicted low loading pool
-    - recommend disk replacement time during low loading time window
+    - recommend predicted low loading time window for disk replacement
 - Capacity trending prediction  
     Alameda can also provide capacity usage trending prediction for Rook's storage providers as well as storages exposed by Rook. Rook knows better **when** to add more disks or more nodes for more capacity.
 
