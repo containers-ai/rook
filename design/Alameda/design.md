@@ -41,7 +41,8 @@ Alameda will monitor rook CRDs with Alameda annotations. For example, Rook user 
       namespace: rook
       <b>annocations:
         container.ai/autoscale: true
-        container.ai/diskFailurePrediction: true</b>
+        container.ai/diskFailurePrediction: true
+        container.ai/capacityTrendingPrediction: true</b>
     spec:
       versionTag: v0.5.1
       dataDirHostPath:
