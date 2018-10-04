@@ -15,8 +15,8 @@ Our first take is to provide the following features, which we consier they are e
 - Automatic resource configuration for pods  
     Alameda includes a community edition AI Engine which generates loading data in the future time. The AI Engine learns patterns from the historical performance metrics of each node and pods running on it. For example, it predicts CPU metrics of next 24 hours in 1-hour internal. With this prediction info of nodes and pods, Alameda can automatically configure pod resource settings without human interventino. Alameda will provides the following features:
 
->- Continously autoamte compute resoruce (i.e. CPU and memory) requests and limits configurations for pods. It takes both a node and pods running on this node into consideration. For Rook, it means users don't need to configure for pods of mgr, mon, and osd.
->- Recommend predicted low loading time window for a predicted bad disk replacement
+    - Continously autoamte compute resoruce (i.e. CPU and memory) requests and limits configurations for pods. It takes both a node and pods running on this node into consideration. For Rook, it means users don't need to configure for pods of mgr, mon, and osd.
+    - Recommend predicted low loading time window for a predicted bad disk replacement
 
 ## How Alameda works
 
