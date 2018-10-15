@@ -23,8 +23,8 @@ Our first take is to provide the following features, which we consider they are 
 1. Alameda data collector gets metrics from Prometheus (e.g., CPU, memory, Ceph metrics)  
 No Alameda Agent is needed.
 2. Alameda AI engine generates resource prediction
-3. Alameda resource operator monitors Rook cluster CRD  
-Alameda monitors rook CRDs with Alameda annotations. For example, Rook user can add ```container.ai/autoscale``` and ```container.ai/diskFailurePrediction``` annotations in their *cluster.yaml* as:
+3. Alameda resource operator monitors Rook cluster CustomResource (CR) 
+Alameda monitors rook CR with Alameda annotations. For example, Rook user can add ```container.ai/autoscale``` and ```container.ai/diskFailurePrediction``` annotations in their *cluster.yaml* as:
 <pre>
     apiVersion: v1
     kind: Namespace
@@ -36,7 +36,7 @@ Alameda monitors rook CRDs with Alameda annotations. For example, Rook user can 
     metadata:
       name: rook
       namespace: rook
-      <b>annocations:
+      <b>annotations:
         container.ai/autoscale: true
         container.ai/diskFailurePrediction: true
         container.ai/capacityTrendingPrediction: true</b>
@@ -53,8 +53,8 @@ Alameda monitors rook CRDs with Alameda annotations. For example, Rook user can 
 </pre>
 
 4. Alameda generates resource operation planning for Rook cluster
-5. Alameda update cluster CRD  
-Alameda will (1) update CRD spec, or (2) update CRD spec with new definitions of planning. No matter they are (1) or (2), Rook needs to change the logic of watching CRD.
+5. Alameda update cluster CR  
+Alameda will (1) update CR spec, or (2) update CR spec with new definitions of planning. No matter they are (1) or (2), Rook needs to change the logic of watching CR.
 
 ![work_flow](./Alameda_work_with_Rook.png)
 
