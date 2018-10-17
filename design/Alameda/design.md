@@ -60,7 +60,7 @@ Rook users deploy a ceph cluster by creating a Rook CRD cluster object. Rook ope
 
 Then Rook operator will create a _Deployment_ object such as:
 <pre>
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1beta1
     kind: Deployment
     metadata:
       annotations:
@@ -90,7 +90,7 @@ By tracing back the _ownerReferences_ information, Alameda knows users request A
 
 When Rook users create a Rook cluster CRD object, Rook operator may create an _Deployment_ object with the following yaml:
 <pre>
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1beta1
     kind: Deployment
     metadata:
       name: rook-ceph-osd-id-1
