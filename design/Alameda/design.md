@@ -41,7 +41,7 @@ For example, with these prediction, Rook can (1) update CR spec, or (2) update C
 
 Rook users deploy a ceph cluster by creating a Rook CRD cluster object. Rook operator will create _Deployment_, _ReplicaSet_ and _Pod_ objects subsequently according to this cluster object. All these subsequent objects can be traced back to the Rook CRD cluster object by looking into the _ownerReferences_ metadata. To request Alameda services, Rook users can annotate a Rook CRD cluster object with Alameda annotations. For example, Rook users can add ```containers.ai/autoscale```, ```containers.ai/diskFailurePrediction``` and ```containers.ai/capacityTrendingPrediction``` annotations in their *cluster.yaml* as:
 <pre>
-	apiVersion: ceph.rook.io/v1beta1
+    apiVersion: ceph.rook.io/v1beta1
     kind: Cluster
     metadata:
       name: rook-ceph
@@ -104,7 +104,7 @@ When Rook users create a Rook cluster CRD object, Rook operator may create an _D
 </pre>
 meanwhile, Rook operator needs to also create an Alameda CRD object as the following yaml to request Alameda for services:
 <pre>
-	apiVersion: containers.ai/v1beta1
+    apiVersion: containers.ai/v1beta1
     kind: Deployment
     metadata:
       <b>annotations:
