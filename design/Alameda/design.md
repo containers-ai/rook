@@ -1,6 +1,6 @@
 ## What is Alameda
 
-Alameda is an intelligent resource orchestrator for Kubernetes, providing the features of autonomous balancing, scaling, and scheduling by using machine learning. Alameda learns the continuing changes of computing resources from K8S clusters, predicts the future computing resoruce demands for pods and nodes, and intelligently orchestrates the underlying computing resources without manual configuration.
+Alameda is an intelligent resource orchestrator for Kubernetes, providing the features of autonomous balancing, scaling, and scheduling by using machine learning. Alameda learns the continuing changes of computing resources from K8S clusters, predicts the future computing resources demands for pods and nodes, and intelligently orchestrates the underlying computing resources without manual configuration.
 
 For more details, please refer to https://github.com/containers-ai/Alameda
 
@@ -24,15 +24,15 @@ Our first take is to provide the following features, which we consider they are 
 Proposal 1: by adding Alameda annotations to Rook CRD objects  
 Proposal 2: by creating Alameda CRD objects to specify users' K8S deployment objects.
 
-2. Alameda utilizes prometheus to scrape data, and these data is adapted into Alameda plane  
+2. Alameda utilizes Prometheus to scrape data, and these data is adapted into Alameda plane  
 Alameda does not have data collection agent.
 
-3. Alameda AI engine generates resource prediction  
+3. Alameda's AI engine predicts computing resourece demands  
 
 4. Alameda exposes prediction raw data via Alameda CRD objects  
-For example, with these prediction, Rook can (1) update CR spec, or (2) update CR spec with new definitions of planning.
+With these predictions, Rook can (1) update CR spec, or (2) update CR spec with new definitions of planning.
 
-5. Alameda automates AI planning based on these prediction raw dataa  
+5. Alameda generates operational plans based on the prediction for further automation 
 
 
 ![work_flow](./Alameda_work_with_Rook.png)
