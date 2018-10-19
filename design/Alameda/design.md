@@ -20,19 +20,25 @@ Our first take is to provide the following features, which we consider they are 
 
 ## How Alameda works
 
-1. Alameda watches objects which need Alameda service  
+1. Users specifying objects that need Alameda services  
 Proposal 1: by adding Alameda annotations to Rook CRD objects  
 Proposal 2: by creating Alameda CRD objects to specify users' K8S deployment objects.
 
-2. Alameda utilizes Prometheus to scrape data, and these data is adapted into Alameda plane  
+2. Alameda watches creation, update, and deletion of the specified objects
+
+3. Alameda utilizes Prometheus to scrape data, and these data is adapted into Alameda plane  
 Alameda does not have data collection agent.
 
-3. Alameda's AI engine predicts computing resourece demands  
+4. Alameda's AI engine predicts computing resourece demands  
 
-4. Alameda exposes prediction raw data via Alameda CRD objects  
+5. Alameda exposes prediction raw data  
 With these predictions, Rook can (1) update CR spec, or (2) update CR spec with new definitions of planning.
 
-5. Alameda generates operational plans based on the prediction for further automation 
+6. Alameda generates operational plans based on the prediction for further automation 
+
+7. Alameda automates the operation plans if enabled.
+
+8. Alameda has a feedback mechanism to evalute the operation results for further refinement.
 
 
 ![work_flow](./Alameda_work_with_Rook.png)
