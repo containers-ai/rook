@@ -36,7 +36,7 @@ With these predictions, Rook can (1) update CR spec, or (2) update CR spec with 
 
 6. Alameda generates operational plans based on the prediction for further automation 
 
-7. Alameda automates the operation plans if enabled.
+7. Third party projects such as Rook can automate resource orchestrations by either leveraging Alameda recommended operational plans or generating their own operational plans from the prediction raw data  
 
 8. Alameda has a feedback mechanism to evalute the operation results for further refinement.
 
