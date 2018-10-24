@@ -20,16 +20,48 @@ Our first take is to provide the following features, which we consider they are 
 
 ## How Alameda works
 
-1. Users specifying objects that need Alameda services  
-Proposal 1: by adding Alameda annotations to Rook CRD objects  
-Proposal 2: by creating Alameda CRD objects to specify users' K8S deployment objects.
+![work_flow](./Alameda_work_with_Rook.png)
 
-2. Alameda watches creation, update, and deletion of the specified objects
+The Alameda works in the following flows:
 
-3. Alameda utilizes Prometheus to scrape data, and these data is adapted into Alameda plane  
+1. Users specifying objects that need Alameda services by creating Alameda CRD objects  
+    When Rook users create a Rook cluster CRD object, Rook operator may create a _Deployment_ object with the following yaml:
+    <pre>
+        apiVersion: apps/v1beta1
+        kind: Deployment
+        metadata:
+          name: rook-ceph-osd-id-1
+          namespace: rook-ceph
+          labels:
+            app: rook-ceph-osd
+            ceph-osd-id: "1"
+            rook_cluster: rook-ceph
+        spec:
+            ...
+    </pre>
+    To request Alameda services for this _Deployment_ object, Rook operator also needs to create an Alameda CRD object as the following yaml:
+    <pre>
+        apiVersion: containers.ai/v1beta1
+        kind: Deployment
+        metadata:
+          <b>annotations:
+            containers.ai/autoscale: true
+            containers.ai/diskFailurePrediction: true
+            containers.ai/capacityTrendingPrediction: true</b>
+        spec:
+          <b>selector:
+            matchLabels:
+              app: rook-ceph-osd
+              ceph-osd-id: "1"
+              rook_cluster: rook-ceph</b>
+    </pre>
+
+2. Alameda watches creation, update, and deletion of the specified targets
+
+3. Alameda leverages Prometheus to scrape data, and these data is adapted into Alameda plane  
 Alameda does not have data collection agent.
 
-4. Alameda's AI engine predicts computing resourece demands  
+4. Alameda's AI engine predicts computing resource demands  
 
 5. Alameda exposes prediction raw data  
 With these predictions, Rook can (1) update CR spec, or (2) update CR spec with new definitions of planning.
@@ -38,90 +70,6 @@ With these predictions, Rook can (1) update CR spec, or (2) update CR spec with 
 
 7. Third party projects such as Rook can automate resource orchestrations by either leveraging Alameda recommended operational plans or generating their own operational plans from the prediction raw data  
 
-8. Alameda has a feedback mechanism to evalute the operation results for further refinement.
+8. Alameda has a feedback mechanism to evalute the operation results for further refinement
 
-
-![work_flow](./Alameda_work_with_Rook.png)
-
-## Request Alameda services by annotating Rook CRD objects (Proposal 1)
-
-Rook users deploy a ceph cluster by creating a Rook CRD cluster object. Rook operator will create _Deployment_, _ReplicaSet_ and _Pod_ objects subsequently according to this cluster object. All these subsequent objects can be traced back to the Rook CRD cluster object by looking into the _ownerReferences_ metadata. To request Alameda services, Rook users can annotate a Rook CRD cluster object with Alameda annotations. For example, Rook users can add ```containers.ai/autoscale```, ```containers.ai/diskFailurePrediction``` and ```containers.ai/capacityTrendingPrediction``` annotations in their *cluster.yaml* as:
-<pre>
-    apiVersion: ceph.rook.io/v1beta1
-    kind: Cluster
-    metadata:
-      name: rook-ceph
-      namespace: rook-ceph
-      <b>annotations:
-        containers.ai/autoscale: true
-        containers.ai/diskFailurePrediction: true
-        containers.ai/capacityTrendingPrediction: true</b>
-    spec:
-      dataDirHostPath: /var/lib/rook
-      serviceAccount: rook-ceph-cluster
-      storage:
-        useAllNodes: true
-        useAllDevices: true
-</pre>
-
-Then Rook operator will create a _Deployment_ object such as:
-<pre>
-    apiVersion: apps/v1beta1
-    kind: Deployment
-    metadata:
-      annotations:
-        deployment.kubernetes.io/revision: "1"
-      creationTimestamp: 2018-09-24T06:59:25Z
-      generation: 5
-      labels:
-        app: rook-ceph-osd
-        ceph-osd-id: "1"
-        rook_cluster: rook-ceph
-      name: rook-ceph-osd-id-1
-      namespace: rook-ceph
-      ownerReferences:
-      - apiVersion: v1beta1
-        blockOwnerDeletion: true
-        kind: Cluster
-        name: rook-ceph
-        uid: e1ec433a-96f4-11e8-b01a-0a168aa5aac2
-      resourceVersion: "11765632"
-      selfLink: /apis/extensions/v1beta1/namespaces/rook-ceph/deployments/rook-ceph-osd-id-1
-      uid: 5f21a46e-bfc7-11e8-8e77-0645df3fb718
-</pre>
-
-By tracing back the _ownerReferences_ information, Alameda knows users request Alameda services.
-
-## Request Alameda services by creating Alameda CRD objects (Proposal 2)
-
-When Rook users create a Rook cluster CRD object, Rook operator may create an _Deployment_ object with the following yaml:
-<pre>
-    apiVersion: apps/v1beta1
-    kind: Deployment
-    metadata:
-      name: rook-ceph-osd-id-1
-      namespace: rook-ceph
-      labels:
-        app: rook-ceph-osd
-        ceph-osd-id: "1"
-        rook_cluster: rook-ceph
-    spec:
-        ...
-</pre>
-meanwhile, Rook operator needs to also create an Alameda CRD object as the following yaml to request Alameda for services:
-<pre>
-    apiVersion: containers.ai/v1beta1
-    kind: Deployment
-    metadata:
-      <b>annotations:
-        containers.ai/autoscale: true
-        containers.ai/diskFailurePrediction: true
-        containers.ai/capacityTrendingPrediction: true</b>
-    spec:
-      <b>selector:
-        matchLabels:
-          app: rook-ceph-osd
-          ceph-osd-id: "1"
-          rook_cluster: rook-ceph</b>
-</pre>
 
